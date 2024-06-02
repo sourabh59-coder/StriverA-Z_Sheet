@@ -1,21 +1,32 @@
-int fun(vector<vector<int>>& v,int ind,int n,int prev)
+int fun(vector<vector<int>> &v,int n,int prev)
     {
-        if(ind==n)  return 0;
-        
-        int ans = 0;
-        
-        for(int i=0;i<=2;i++)
+        if(n==0)
         {
-            if(i!=prev)
+            int maxi = 0;
+            
+            for(int i=0;i<3;i++)
             {
-                int val = v[ind][i] + fun(v,ind+1,n,i);
-                ans = max(ans , val);
+                if(prev!=i)     maxi = max(maxi,v[n][i]);
+            }
+            
+            return maxi;
+        }
+        
+        int maxi = 0;
+        
+        for(int i=0;i<3;i++)
+        {
+            if(prev!=i)
+            {
+                int val = v[n][i] + fun(v,n-1,i);
+                
+                maxi = max(maxi , val);
             }
         }
         
-        return ans;
+        return maxi;
     }
-    int maximumPoints(vector<vector<int>>& v, int n) {
+    int maximumPoints(vector<vector<int>>& points, int n) {
         // Code here
-        return fun(v,0,n,3);
+        return fun(points,n-1,3);
     }
